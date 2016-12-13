@@ -66,6 +66,7 @@ public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClic
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // need something here
+        convertView = parent.getChildAt(position);
+        return convertView;
     }
 }

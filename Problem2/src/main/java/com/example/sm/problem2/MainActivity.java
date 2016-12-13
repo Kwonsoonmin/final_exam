@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // need something here
+        ArrayList<Employee> emp_list = null;
 
         adapter = new MyBaseAdapter(this, emp_list);
         listview = (ListView) findViewById(R.id.listView1) ;
@@ -29,27 +29,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EditText edit_age = (EditText) findViewById(R.id.edit_age);
         EditText edit_salary = (EditText) findViewById(R.id.edit_salary);
 
+        String name = edit_name.getText().toString();
+        String age = edit_age.getText().toString();
+        String salary = edit_salary.getText().toString();
+
+        int a = Integer.parseInt(age);
+        int s = Integer.parseInt(salary);
+
         Employee employee;
 
         switch (v.getId()){
             case R.id.btn_inc:
-                // need something here
+                employee = new Employee(name,a,s);
+                employee.increase();
                 break;
 
             case R.id.btn_dec:
-                // need something here
+                employee = new Employee(name,a,s);
+                employee.decrease();
                 break;
 
             case R.id.btn_store:
-                // need something here
+                employee = new Employee(name, a,s);
+                adapter.add(employee);
                 break;
 
             case R.id.btn_modify:
-                // need something here
+                employee = new Employee(name, a,s);
+                adapter.add(employee);
                 break;
 
             case R.id.btn_delete:
-                // need something here
+                employee = new Employee(name, a, s);
+                int index = listview.getId();
+                adapter.delete(index);
                 break;
         }
     }

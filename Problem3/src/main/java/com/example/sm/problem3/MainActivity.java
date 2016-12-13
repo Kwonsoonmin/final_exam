@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<CustomerThread> list = new ArrayList<CustomerThread>();
         Manager manager = new Manager();
 
+        int sum = 0;
+
         for(int i = 0 ; i < 10 ; i++){
             Customer customer = new Customer("Customer" + i);
             CustomerThread ct = new CustomerThread(customer);
@@ -28,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         for(CustomerThread ct : list){
-
             try {
-                // need something here
-            } catch (InterruptedException e) { }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         manager.sort();
@@ -51,7 +53,16 @@ class CustomerThread extends Thread{
     CustomerThread(Customer customer){
         this.customer = customer;
     }
-    // need something here
+
+    public void run() {
+        while(true) {
+            try{
+                customer.work();
+            }catch (SecurityException se) {
+                se.printStackTrace();
+            }
+        }
+    }
 }
 
 abstract class Person{
@@ -70,7 +81,10 @@ class Customer extends Person{
         this.name = name;
     }
 
-    // need something here
+    void work() {
+        int money = (int)(Math.random() * 1000);
+        spent_money += money;
+    }
 }
 
 
@@ -82,9 +96,20 @@ class Manager extends Person{
     }
 
     void sort(){ // 직접 소팅 알고리즘을 이용하여 코딩해야함. 자바 기본 정렬 메소드 이용시 감
+        int max = list.get(0).spent_money;
+        int index = 0;
 
-        // need something here
-
+        for(int i = 0; i< list.size(); i++) {
+            int temp = list.get(i).spent_money;
+            if(temp > max) {
+                max = temp;
+                Customer temp1 = list.get(index);
+                Customer temp2 = list.get(i);
+                list.add(0, temp1);
+                list.add(1,temp2);
+                index = i;
+            }
+        }
     }
 
     @Override
